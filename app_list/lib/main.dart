@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'App List',
-      theme: ThemeData(
+      
+      theme: ThemeData(      
       ),
       home: const HomePage(),
     );
