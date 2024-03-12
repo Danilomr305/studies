@@ -15,10 +15,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      splash: Column(
+      splash: const Column(
         children: [
-          Image.asset('imagens/github.png'),
-          const Text('Danilo & Sayonara', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
+          Icon(Icons.abc_outlined,
+          size: 40),
+          Text('Danilo & Sayonara', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
         ],
       ),
       nextScreen: const Home(),
