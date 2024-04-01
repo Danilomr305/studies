@@ -1,10 +1,25 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:explorador/pages/foto_page.dart';
+import 'package:explorador/pages/home_principal_page.dart';
+import 'package:explorador/pages/seguranca_page.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final PageController _pageController = PageController();
+  int navegacaoIndex = 0;
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: WidgetsApp.debugAllowBannerOverride,
@@ -15,50 +30,14 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          color: Colors.indigoAccent,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Explorando',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-
-              const SizedBox(
-                height: 30,
-              ),
-
-              Container(
-                height: 80,
-                width: 80,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  
-                ),
-              ),
-
-              const SizedBox(
-                height: 30,
-              ),
-
-              const Text(
-                'Fazendo teste para que assim eu venha \n me torna um grande desenvolvedor!',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  decoration: TextDecoration.underline,
-                ),
-              )
-            ],
-          ),
+        body: PageView(
+          
+          controller: _pageController,
+          children: const [
+            HomePrincipalPage(),
+            SegurancaPage(),
+            FotoPage()
+          ],
         ),
 
         floatingActionButton: FloatingActionButton(
@@ -73,6 +52,16 @@ class HomePage extends StatelessWidget {
         ),
 
         bottomNavigationBar: BottomNavigationBar(
+          currentIndex: navegacaoIndex,
+          onTap: (int navegacao) { _pageController.animateToPage(
+            navegacao, 
+            duration: const  Duration(milliseconds: 600), 
+            curve: Curves.easeInSine,
+          );
+          setState(() {
+            navegacaoIndex = navegacao;
+          });
+          },
           items: const  [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
