@@ -13,8 +13,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   final PageController _pageController = PageController();
-  int navegacao = 0;
+  int navegacaoIndexx = 0;
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -22,6 +23,9 @@ class _HomePageState extends State<HomePage> {
         title: const Text(
           'Navegação'
         ),
+      ),
+      drawer: const Drawer(
+
       ),
       body: PageView(
         controller: _pageController,
@@ -32,7 +36,18 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
      bottomNavigationBar: BottomNavigationBar(
-      currentIndex: navegacao,
+      currentIndex: navegacaoIndexx,
+      onTap: (int navegacao) {
+        _pageController.animateToPage(
+          navegacao, 
+          duration: const Duration(milliseconds: 600), 
+          curve: Curves.decelerate);
+          
+          setState(() {
+            navegacaoIndexx = navegacao;
+          });
+      }
+      ,
       items: const[
         BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined),
