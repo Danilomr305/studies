@@ -1,4 +1,6 @@
 
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 import '../componentes/bottom_nav_bar.dart';
@@ -58,7 +60,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             valueListenable: PreferenciaTema.tema,
             builder: (BuildContext context, Brightness tema, _) => 
               Scaffold(
-                backgroundColor: backgroundColor,
+                backgroundColor: Colors.white38,
                 bottomNavigationBar: BottomNavBar(
                   onTabChange: (index) => navigateBottomBar(index),
                 ),
