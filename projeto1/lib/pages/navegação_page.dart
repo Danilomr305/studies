@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 import '../componentes/bottom_nav_bar.dart';
-import '../models/preferencia_tema.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -28,7 +28,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
-    PreferenciaTema.setTema();
     super.initState();
   }
 
@@ -36,11 +35,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void dispose() {
    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
-  }
-
-  @override
-  void didChangePlatformBrightness() {
-   PreferenciaTema.setTema();
   }
 
 
@@ -57,7 +51,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
       return 
           ValueListenableBuilder(
-            valueListenable: PreferenciaTema.tema,
             builder: (BuildContext context, Brightness tema, _) => 
               Scaffold(
                 backgroundColor: Colors.white38,
@@ -66,7 +59,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 ),
                 body: _pages[_selectedIndex],
                 
-              ),
+              ), //valueListenable: ,
          );
   }
 }
