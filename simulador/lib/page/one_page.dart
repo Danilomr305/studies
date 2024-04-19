@@ -1,6 +1,9 @@
-import 'dart:math';
+// ignore_for_file: avoid_print
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:simulador/api/post_api.dart';
 
 class OnePage extends StatefulWidget {
   const OnePage({super.key});
@@ -12,13 +15,20 @@ class OnePage extends StatefulWidget {
 class _OnePageState extends State<OnePage> {
 
 
-  ValueNotifier<int> valorAleatorio = ValueNotifier<int>(0);
+  ValueNotifier<List<Post>> posts = ValueNotifier<List<Post>>([]);
 
-  random() async {
-    for (int i = 0; i < 10; i++) {
-      await Future.delayed( const Duration(seconds: 1));
-      valorAleatorio.value = Random().nextInt(102);
-    }
+  callAPI() async {
+    var client = http.Client();
+try {
+  var response = await client.get(
+      Uri.parse('https://jsonplaceholder.typicode.com/posts'),
+  );
+  var decodedResponse = jsonDecode((response.body));
+  posts.value = decodedResponse.map((e) => Post.fromJson(e)).toList();
+
+} finally {
+  client.close();
+}
   }
 
   @override
@@ -29,33 +39,39 @@ class _OnePageState extends State<OnePage> {
     return Scaffold(
       backgroundColor: Colors.deepOrangeAccent,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ValueListenableBuilder(
-              valueListenable: valorAleatorio, 
-              builder: (_, value, __) => Text(
-                'Valor eh: $value',
-                style: const TextStyle(
-                  fontSize: 20
-                ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ValueListenableBuilder<List<Post>>(
+                valueListenable: posts, 
+                builder: (_, value, __) => ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (_, idx) => ListTile(
+                    title: Text(
+                      value[idx].title
+                    ),
+                  ),
+                  itemCount: value.length,
+                )
+              ),
+          
+              const SizedBox(
+                height: 10,
+              ),
+          
+              ElevatedButton(
+                
+                onPressed: () => callAPI(), 
+                child: const Text('Custom BTN',
+                style: TextStyle(
+                  fontSize: 18
+                ),)
               )
-            ),
-
-            const SizedBox(
-              height: 10,
-            ),
-
-            ElevatedButton(
-              
-              onPressed: () => random(), 
-              child: const Text('Custom BTN',
-              style: TextStyle(
-                fontSize: 18
-              ),)
-            )
-
-          ],
+          
+            ],
+          ),
         ),
       ),
     );
