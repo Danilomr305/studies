@@ -16,19 +16,22 @@ class _OnePageState extends State<OnePage> {
 
 
   ValueNotifier<List<Post>> posts = ValueNotifier<List<Post>>([]);
+  ValueNotifier<bool> inLoader = ValueNotifier<bool>(false);
 
   callAPI() async {
     var client = http.Client();
-try {
-  var response = await client.get(
-      Uri.parse('https://jsonplaceholder.typicode.com/posts'),
-  );
-  var decodedResponse = jsonDecode((response.body));
-  posts.value = decodedResponse.map((e) => Post.fromJson(e)).toList();
-
-} finally {
-  client.close();
-}
+    try {
+      inLoader.value = true;
+      var response = await client.get(
+          Uri.parse('https://jsonplaceholder.typicode.com/posts'),
+      );
+      var decodedResponse = jsonDecode(response.body)  as List;
+      posts.value = decodedResponse.map((e) => Post.fromJson(e)).toList();
+      await Future.delayed( const Duration(milliseconds: 200));
+    } finally {
+      client.close();
+      inLoader.value = false;
+    }
   }
 
   @override
@@ -43,18 +46,17 @@ try {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ValueListenableBuilder<List<Post>>(
-                valueListenable: posts, 
-                builder: (_, value, __) => ListView.builder(
+              AnimatedBuilder(
+                animation: Listenable.merge([posts, inLoader]), 
+                builder: (_, __) => inLoader.value ? const CircularProgressIndicator() : 
+                ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
+                  itemCount: posts.value.length,
                   itemBuilder: (_, idx) => ListTile(
-                    title: Text(
-                      value[idx].title
-                    ),
+                    title: Text(posts.value[idx].title),
                   ),
-                  itemCount: value.length,
-                )
+                ),
               ),
           
               const SizedBox(
