@@ -10,7 +10,6 @@ final Client = http.Client();
 
   @override
   Future get({required String url}) async {
-    Client.get(Uri.parse(url));
     return await Client.get(Uri.parse(url));
   }
 }
