@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+  
+  get ima => null;
 
   @override
   Widget build(BuildContext context) {
 
-    final imags = ImagemRepository.images;
+    final images = ImagemRepository.images;
 
     return SingleChildScrollView(
       child: Scaffold(
@@ -25,23 +27,12 @@ class HomePage extends StatelessWidget {
             children: [
               Container(
                 height: 400,
-                child: ListView.builder(
-                  itemBuilder:  (BuildContext context, int images) {
-                    return Column(
-                      children: [
-                        ListTile(
-                        leading: Image.asset(imags[images].title),
-                      ),
-                      
-                      
-                      
-                      ]
-                    );
-                  },
-                  shrinkWrap: true,
-                  itemCount: imags.length,
-                  
-                ),
+                
+                child: ListTile(
+                  leading: Image.network(images[ima].title),
+                  title: Text(images[ima].name),
+                  trailing: Text(images[ima].price.toString()),
+                )
               )
             ]
           ),
