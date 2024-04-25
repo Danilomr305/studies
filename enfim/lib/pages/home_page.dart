@@ -1,5 +1,3 @@
-// ignore_for_file: unused_element
-
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,30 +9,50 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  int _conta = 0;
+  int _contar = 5;
 
-  void _iniciacontagem() {
+  int _dcontar = 2;
+
+  final int _valor = 3 * 10;
+
+  void _iniciardescontagem() {
     setState(() {
-      _conta++;
+      _contar --;
+    });
+  }
+
+  void _iniciarcontagem() {
+    setState(() {
+      _contar ++;
+    });
+  }
+
+  void _iniciarmulticacaocontagem() {
+    setState(() {
+      _contar * _dcontar;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: 
+      Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('$_conta',
-            style: TextStyle(fontSize: 20),)
+            Text('$_contar')
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _iniciacontagem,
-        child: Icon(Icons.add),
-      ),
+
+      
+
+      floatingActionButton:   
+        FloatingActionButton(
+          onPressed: _iniciarcontagem,
+          child: const Icon(Icons.add),
+        ),
     );
   }
 }
