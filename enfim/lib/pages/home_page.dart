@@ -13,8 +13,6 @@ class _HomePageState extends State<HomePage> {
 
   int _dcontar = 2;
 
-  final int _valor = 3 * 10;
-
   void _iniciardescontagem() {
     setState(() {
       _contar --;
