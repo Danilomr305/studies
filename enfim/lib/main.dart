@@ -1,19 +1,55 @@
+import 'package:enfim/Pages/drawer_page.dart';
 import 'package:flutter/material.dart';
 
-import 'pages/home_page.dart';
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
-void main() {
-  runApp(const MainApp());
+  @override
+  State<HomePage> createState() => _HomePageState();
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class _HomePageState extends State<HomePage> {
+
+  int _contar = 0;
+
+  void _iniciarcontagem() {
+    setState(() {
+      _contar++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false ,
-      home: HomePage()
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white24,
+        title: const Text(
+          'Enfim',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+          ),
+        ),
+        centerTitle: WidgetsApp.debugShowWidgetInspectorOverride,
+      ),
+
+      drawer: DrawerPage(),
+
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'iniciar contagem: $_contar'
+            )
+          ],
+        ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: _iniciarcontagem,
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
