@@ -1,7 +1,7 @@
 import 'package:enfim/Pages/drawer_page.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+  class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: WidgetsApp.debugShowWidgetInspectorOverride,
       ),
 
-      drawer: DrawerPage(),
+      drawer: const DrawerPage(),
 
       body: Center(
         child: Column(
@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: _iniciarcontagem,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
