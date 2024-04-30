@@ -80,6 +80,7 @@ class _DrawerPageState extends State<DrawerPage> {
                         fontWeight: FontWeight.bold
                       ),
                     ),
+                    
                   ),
                    
                   SizedBox(
